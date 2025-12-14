@@ -15,3 +15,15 @@ export const assets = {
   dog,
   group
 }
+
+
+export const menuLinks = [
+  {
+    name: 'Home', path:'/'
+  },
+  {
+    name: 'Pets', path :'/pets'
+  },
+  {
+    name: 'My Bookings', path :'/my-boolings'
+  }, ];
