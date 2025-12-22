@@ -1,12 +1,15 @@
 import React, { useState} from 'react'
 import { assets, menuLinks } from '../assets/assets'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
-export const Navbar = () => {
+export const Navbar = ({setShowLogin}) => {
 
   const location = useLocation();
 
   const [Open, setOpen] = useState(false)
+
+
+  const navigate = useNavigate();
   return (
     <div className={`flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 text-gray-600 border-b border-borderColor relative transition-all ${location.pathname === '/' && 'bg-transparent' }`}>
       <Link to='/'>
@@ -30,8 +33,8 @@ export const Navbar = () => {
 
 
         <div className='flex max-sm:flex-col items-start sm:items-center gap-6 '>
-          <button className='cursor-pointer'>Dashboard</button>
-          <button className='px-8 py-2 rounded-lg text-sm text-black bg-[#31E1F7] hover:opacity-70 transition-all cursor-pointer'>Login</button>
+          <button onClick={()=>navigate('/owner')} className='cursor-pointer'>Dashboard</button>
+          <button onClick={setShowLogin(true)} className='px-8 py-2 rounded-lg text-sm text-black bg-[#31E1F7] hover:opacity-70 transition-all cursor-pointer'>Login</button>
         </div>
             
       </div>
