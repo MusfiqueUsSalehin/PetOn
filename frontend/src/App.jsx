@@ -20,7 +20,7 @@ export const App = () => {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/pets' element={<Pets />} />
-        <Route path='/pets/:id' element={<PetDetails />} />
+        <Route path='/petDetails/:id' element={<PetDetails />} />
         <Route path='/my-bookings' element={<MyBookings />} />
       </Routes>
 
