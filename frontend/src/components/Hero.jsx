@@ -72,7 +72,7 @@ const Hero = () => {
         
       </form>
 
-      <img src={assets.group} alt="pets" className='max-h-74'/>
+      <img src={assets.group} alt="pets" className='max-h-90'/>
     
     
     

@@ -5,8 +5,10 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
 import Pets from './pages/Pets';
 import PetDetails from './pages/PetDetails';
+import Footer from './components/Footer';
 
 import MyBookings from './pages/MyBookings';
+
 
 export const App = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -23,6 +25,10 @@ export const App = () => {
         <Route path='/petDetails/:id' element={<PetDetails />} />
         <Route path='/my-bookings' element={<MyBookings />} />
       </Routes>
+
+      {!isOwnerPath && <Footer />}
+
+      
 
 
 

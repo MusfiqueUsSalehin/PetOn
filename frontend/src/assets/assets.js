@@ -11,6 +11,14 @@ import smile from './smile.svg'
 import paw from './paw.svg'
 import location_icon from './location_icon.svg'
 import arrow_right from './arrow_icon.svg'
+import testimonial1 from './testimonial_image_1.png'
+import testimonial2 from './testimonial_image_2.png'
+import star_icon from './star_icon.svg'
+import facebook_logo from './facebook_logo.svg'
+import instagram_logo from './instagram_logo.svg'
+import twitter_logo from './twitter_logo.svg'
+import gmail_logo from './gmail_logo.svg'
+
 
 
 
@@ -27,7 +35,14 @@ export const assets = {
   smile,
   paw,
   location_icon,
-  arrow_right
+  arrow_right,
+  testimonial1,
+  testimonial2,
+  star_icon,
+  facebook_logo,
+  instagram_logo,
+  twitter_logo,
+  gmail_logo
 }
 
 
