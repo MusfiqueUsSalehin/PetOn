@@ -32,13 +32,13 @@ export const App = () => {
         <Route path='/petDetails/:id' element={<PetDetails />} />
         <Route path='/my-bookings' element={<MyBookings />} />
 
+        
+
         <Route path='/owner' element={<Layout />}>
           <Route path='dashboard' element={<Dashboard />} />
           <Route path='add-pet' element={<AddPet />} />
           <Route path='manage-bookings' element={<ManageBookings />} />
           <Route path='manage-pets' element={<ManagePets />} />
-
-
         </Route>
       </Routes>
 

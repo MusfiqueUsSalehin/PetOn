@@ -23,6 +23,14 @@ import golden_retriever from './golden.jpg'
 import filter from './filter_icon.svg'
 import calender_icon_colored from './calendar_icon_colored.svg'
 import location_icon_colored from './location_icon_colored.svg'
+import edit_icon from './edit_icon.svg'
+import dashboardIcon from './dashboardIcon.svg'
+import dashboardIconColored from './dashboardIconColored.svg'
+import addIcon from './addIcon.svg'
+import addIconColored from './addIconColored.svg'
+import listIcon from './listIcon.svg'
+import listIconColored from './listIconColored.svg'
+
 
 
 
@@ -51,7 +59,12 @@ export const assets = {
   check_icon,
   filter,
   calender_icon_colored,
-  location_icon_colored
+  location_icon_colored,
+  edit_icon,
+  dashboardIcon,
+  dashboardIconColored,
+  addIcon,
+  addIconColored
   
 }
 
@@ -70,6 +83,13 @@ export const menuLinks = [
     name: 'My Bookings', path :'/my-bookings'
   }, ];
 
+
+export const ownerMenuLinks = [
+    { name: "Dashboard", path: "/owner", icon: dashboardIcon, coloredIcon: dashboardIconColored },
+    { name: "Add Car", path: "/owner/add-pet", icon: addIcon, coloredIcon: addIconColored },
+    { name: "Manage Cars", path: "/owner/manage-pets", icon: paw, coloredIcon: paw },
+    { name: "Manage Bookings", path: "/owner/manage-bookings", icon: listIcon, coloredIcon: listIconColored },
+]
 
 
 export const dummyUserData = {
