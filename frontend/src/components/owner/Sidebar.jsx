@@ -17,7 +17,7 @@ const Sidebar = () => {
 
 
   return (
-    <div className="relative min-h-screen md:flex flex-col items-center pt-8 max-w-13 md:max-w-60 w-full border-r border-borderColor text-sm">
+    <div className="relative min-h-screen md:flex flex-col items-center pt-8 max-w-13 md:max-w-60 w-full border-r bg-[#FFD369] border-black text-sm">
       <div className="group relative">
         <label htmlFor="image">
           <img
@@ -43,7 +43,7 @@ const Sidebar = () => {
       </div>
       {image && (
         <button
-          className="absolute top-0 right-0 flex p-2 gap-1 bg-primary/10 text-primary cursor-pointer"
+          className="absolute top-0 right-0 flex p-2 gap-1 bg-white text-black cursor-pointer rounded-lg m-2"
           onClick={updateImage}>
           <img src={assets.check_icon} alt="check-icon" width={13} />
           Save
@@ -56,7 +56,7 @@ const Sidebar = () => {
             key={idx}
             to={link.path}
             className={`relative flex items-center gap-2 w-full py-3 pl-4 first:mt-6 ${
-              link.path === location.pathname ? "bg-primary/10 text-primary" : "text-gray-600" }`}>
+              link.path === location.pathname ? " text-[black] bg-white/40" : "text-gray-600" }`}>
             <img
               src={
                 link.path === location.pathname

@@ -35,7 +35,7 @@ export const App = () => {
         
 
         <Route path='/owner' element={<Layout />}>
-          <Route path='dashboard' element={<Dashboard />} />
+          <Route index element={<Dashboard />} />
           <Route path='add-pet' element={<AddPet />} />
           <Route path='manage-bookings' element={<ManageBookings />} />
           <Route path='manage-pets' element={<ManagePets />} />

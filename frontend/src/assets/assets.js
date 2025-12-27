@@ -30,6 +30,13 @@ import addIcon from './addIcon.svg'
 import addIconColored from './addIconColored.svg'
 import listIcon from './listIcon.svg'
 import listIconColored from './listIconColored.svg'
+import cautionIcon from './cautionIconColored.svg'
+import upload from './upload_icon.svg'
+import tick_icon from './tick_icon.svg'
+import eye_close_icon from './eye_close_icon.svg'
+import eye_icon from './eye_icon.svg'
+import delete_icon from './delete_icon.svg'
+
 
 
 
@@ -64,8 +71,15 @@ export const assets = {
   dashboardIcon,
   dashboardIconColored,
   addIcon,
-  addIconColored
-  
+  addIconColored,
+  cautionIcon,
+  listIcon,
+  listIconColored,
+  upload,
+  tick_icon,
+  eye_close_icon,
+  eye_icon,
+  delete_icon
 }
 
 
@@ -227,3 +241,16 @@ export const dummyBookingsData = [
   }
 ];
 
+
+
+export const dummyDashboardData = {
+    "totalPets": 4,
+    "totalBookings": 2,
+    "pendingBookings": 0,
+    "completedBookings": 2,
+    "recentBookings": [
+        dummyBookingsData[0],
+        dummyBookingsData[1]
+    ],
+    "monthlyRevenue": 840
+}

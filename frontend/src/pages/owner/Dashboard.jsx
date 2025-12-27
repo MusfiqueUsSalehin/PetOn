@@ -1,8 +1,124 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { dummyDashboardData, assets } from '../../assets/assets'
+import Title from '../../components/owner/Title'
+
 
 const Dashboard = () => {
+
+  const currency = import.meta.env.VITE_CURRENCY
+
+  const [data, setData] = useState({
+    totalPets: 0,
+    totalBookings: 0,
+    pendingBookings: 0,
+    completedBookings: 0,
+    recentBookings: [],
+    monthlyRevenue: 0,
+
+  })
+
+  const dashboardCards = [
+    {
+      title: "Total Pets",
+      value: data.totalPets,
+      icon: assets.paw,
+    },
+    {
+      title: "Total Bookings",
+      value: data.totalBookings,
+      icon: assets.listIconColored,
+    },
+    {
+      title: "Pending",
+      value: data.pendingBookings,
+      icon: assets.cautionIcon,
+    },
+    {
+      title: "Confirmed",
+      value: data.completedBookings,
+      icon: assets.listIconColored,
+    },
+  ];
+
+  
+
+
+  useEffect(()=>{
+    setData(dummyDashboardData)
+
+  },[])
+
+
+
   return (
-    <div>Dashboard</div>
+    <div className="px-4 pt-10 md:px-10 flex-1">
+      <Title
+        title="Admin Dashboard"
+        subTitle="Monitor overall platform performance including total pets, bookings, revenue and recent activities."
+      />
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 my-8 max-w-3xl">
+        {dashboardCards.map((card, idx) => (
+          <div
+            key={idx}
+            className="flex gap-2 items-center justify-between p-4 rounded-md border border-[#FFD369]">
+            <div>
+              <h1 className="text-xs text-white">{card.title}</h1>
+              <p className="text-lg font-semibold text-green-300">{card.value}</p>
+            </div>
+            <div className="flex items-center justify-center h-10 w-10 rounded-full bg-white/80">
+              <img src={card.icon} alt="card-icon" className="w-4 h-4" />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex flex-wrap items-start gap-6 mb-8 w-full">
+        {/* recent bookings */}
+        <div className="p-4 md:p-6 border border-white rounded-md max-w-lg w-full bg-[#FFD369]">
+          <h1 className="text-lg font-medium">Recent Bookings</h1>
+          <p className="text-gray-500">Latest customer bookings</p>
+          {data.recentBookings.map((booking, idx) => (
+            <div key={idx} className="mt-4 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="hidden md:flex items-center justify-center w-12 h-12 rounded-full bg-primary/10">
+                  <img
+                    src={assets.listIconColored}
+                    alt="list-icon"
+                    className="h-5 w-5"
+                  />
+                </div>
+                <div className="">
+                  <p className="">
+                    {booking.pet.name} | {booking.pet.species}
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {booking.createdAt.split("T")[0]}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 font-medium">
+                <p className="text-sm text-black">
+                  {currency}
+                  {booking.price}
+                </p>
+                <p className="px-3 py-0.5 border border-borderColor rounded-full text-sm bg-white/50">
+                  {booking.status}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+        {/* monthly revenue */}
+        <div className="p-4 md:p-6 border border-white bg-white/10 rounded-md w-full md:max-w-xs">
+          <h1 className="text-lg font-medium text-white">Monthly Revenue</h1>
+          <p className="text-[#FFD369]">Revenue for current month</p>
+          <p className="text-3xl mt-6 font-semibold text-blue-600">
+            {currency}
+            {data.monthlyRevenue}
+          </p>
+        </div>
+      </div>
+    </div>
   )
 }
 
