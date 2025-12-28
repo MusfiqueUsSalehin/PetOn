@@ -1,10 +1,15 @@
 import "dotenv/config";
 import cors from "cors";
 import express from "express";
+import { connect } from "mongoose";
+import connectDB from "./configs/db.js";
 
 
 // Initialize express app
 const app = express();
+
+// Connect to database
+await connectDB();
 
 //middleware
 app.use(cors());
