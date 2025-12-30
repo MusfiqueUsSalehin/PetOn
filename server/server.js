@@ -3,6 +3,8 @@ import cors from "cors";
 import express from "express";
 import { connect } from "mongoose";
 import connectDB from "./configs/db.js";
+import userRouter from "./routes/userRoutes.js";
+import ownerRouter from "./routes/ownerRoutes.js";
 
 
 // Initialize express app
@@ -17,6 +19,8 @@ app.use(express.json());
 
 
 app.get('/', (req,res)=>res.send('server is running!!'))
+app.use('/api/users', userRouter);
+app.use('/api/owner', ownerRouter);
 
 const PORT = process.env.PORT || 3000 ;
 
