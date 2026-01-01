@@ -17,6 +17,8 @@ import ManageBookings from './pages/owner/ManageBookings';
 import ManagePets from './pages/owner/ManagePets';
 import Login from './components/Login';
 
+import {Toaster} from 'react-hot-toast';
+
 
 export const App = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -25,6 +27,7 @@ export const App = () => {
 
   return (
     <>
+      <Toaster position='top-center' />
       {showLogin && <Login setShowLogin={setShowLogin}/>}
       {!isOwnerPath && <Navbar setShowLogin={setShowLogin}/>}
 
