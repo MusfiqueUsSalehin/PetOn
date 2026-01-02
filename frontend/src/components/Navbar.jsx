@@ -1,12 +1,40 @@
-import React, { useState} from 'react'
+import React, {useContext, useState} from 'react'
 import { assets, menuLinks } from '../assets/assets'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast';
 
-export const Navbar = ({setShowLogin}) => {
+
+
+import { useAppContext } from '../context/AppContext'
+
+export const Navbar = () => {
+
+  const {setShowLogin, user, logoutUser, isOwner, setIsOwner, axios, setUser} = useAppContext();
+
 
   const location = useLocation();
 
   const [Open, setOpen] = useState(false)
+
+
+  const changeRole = async () => {
+    try {
+      const {data} = await axios.post('/api/owner/change-role')
+        if(data.success) {
+          setIsOwner(true);
+
+          
+          toast.success(data.message);
+          
+        } else {
+          toast.error(data.message);
+        }
+      } 
+      catch(err) {
+        console.log(err.message);
+        toast.error(err.message);
+      }
+  }
 
 
   const navigate = useNavigate();
@@ -33,8 +61,8 @@ export const Navbar = ({setShowLogin}) => {
 
 
         <div className='flex max-sm:flex-col items-start sm:items-center gap-6 '>
-          <button onClick={()=>navigate('/owner')} className='cursor-pointer'>Dashboard</button>
-          <button onClick={()=>setShowLogin(true)} className='px-8 py-2 rounded-lg text-sm text-black bg-[#31E1F7] hover:opacity-70 transition-all cursor-pointer'>Login</button>
+          <button onClick={()=>isOwner ? navigate('/owner') : changeRole()} className='cursor-pointer'>{isOwner ? 'Dashboard' : 'List Pets'} </button>
+          <button onClick={()=>{user ? logoutUser() : setShowLogin(true)}} className='px-8 py-2 rounded-lg text-sm text-black bg-[#31E1F7] hover:opacity-70 transition-all cursor-pointer'>{user ? 'Logout' : 'Login'}</button>
         </div>
             
       </div>

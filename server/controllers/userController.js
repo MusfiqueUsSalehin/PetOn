@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 import bcrypt from "bcrypt";
+import Pet from "../models/pet.js";
 
 
 
@@ -82,6 +83,23 @@ export const getUserData = async (req, res) => {
         const {user} = req;
 
         res.json({ success: true, user });
+    }
+    catch (error) {
+        console.log(error.message);
+        res.json({ success: false, message: error.message }); 
+
+    }
+}
+
+
+// API to get pet list
+
+export const getPets = async (req, res) => {
+    try {
+        const pets = await Pet.find({isAvailable: true});
+
+
+        res.json({ success: true, pets });
     }
     catch (error) {
         console.log(error.message);

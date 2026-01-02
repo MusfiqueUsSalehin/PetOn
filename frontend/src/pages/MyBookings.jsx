@@ -1,20 +1,38 @@
 import React, { useEffect } from 'react'
 import Title from '../components/Title'
-import { assets, dummyBookingsData } from '../assets/assets'
+import { assets } from '../assets/assets'
 import { useState } from 'react'
+import { useAppContext } from '../context/appContext'
+import toast from 'react-hot-toast'
 
 const MyBookings = () => {
+
+  const {axios, user, currency} = useAppContext
   const [bookings, setBookings] = useState([]);
-  const currency = import.meta.env.VITE_CURRENCY;
+
+
+  
 
   const fetchMyBookings = async () => {
-    setBookings(dummyBookingsData);
+    try {
+      const {data} = await axios.get('/api/bookings/user-bookings');
+      if(data.success){
+        setBookings(data.bookings);
+      }
+      else{
+        toast.error(data.message);
+      }
+    } 
+    catch (error) {
+      toast.error(error.message);
+    }
+    
   };
 
 
   useEffect(() => {
-    fetchMyBookings();
-  }, []);
+    user && fetchMyBookings();
+  }, [user]);
   
   return (
     <div

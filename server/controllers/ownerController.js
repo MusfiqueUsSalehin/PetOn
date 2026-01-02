@@ -66,7 +66,7 @@ export const listPet = async (req, res) => {
     } 
     catch (error) {
         console.error(error.message);
-        res.json({ success:false, message: 'Server Error' });
+        res.json({ success:false, message: error.message });
     }
 };
 

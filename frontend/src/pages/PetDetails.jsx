@@ -1,27 +1,49 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
-import { dummyPetData } from '../assets/assets';
 import { assets } from '../assets/assets';
 import Loader from '../components/Loader';
+import { useAppContext } from '../context/appContext';
+import toast from 'react-hot-toast';
 
 
 const PetDetails = () => {
 
   const {id} = useParams();
+
+  const {pets, axios, pickupDate,setPickupDate, returnDate,setReturnDate} = useAppContext();
+
+
   const navigate = useNavigate();
   const [pet, setPet] = useState(null);
-  const [pickupDate, setPickupDate] = useState("");
-  const [returnDate, setReturnDate] = useState("");
+  
   const currency = import.meta.env.VITE_CURRENCY;
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
+    try {
+      const {data} = await axios.post('/api/bookings/create-booking',{ pet : id, pickupDate, returnDate });
+      if(data.success){
+        toast.success(data.message);
+        navigate('/user-bookings');
+      }
+      else{
+        toast.error(data.message);
+      } 
+    } 
+    catch (error) {
+      toast.error(error.message);
+
+    }
     
   }
 
+
   useEffect(() => {
-    setPet(dummyPetData.find((pet) => pet._id === id));
-  }, [id]);
+    setPet(pets.find((pet) => pet._id === id));
+  }, [pets,id]);
+
+
+
 
   return pet ? (
     <div className="px-6 md:px-16 lg:px-24 xl:px-32 mt-16">

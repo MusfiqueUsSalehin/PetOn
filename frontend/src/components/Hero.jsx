@@ -1,14 +1,25 @@
 import React from 'react'
 import { assets , cityList } from '../assets/assets'
 import { useState } from 'react'
+import { useAppContext } from '../context/appContext';
 
 const Hero = () => {
 
   const [pickupLocation, setPickupLocation] = useState("");
+
+  const {pickupDate,setPickupDate, returnDate,setReturnDate, navigate} = useAppContext();
+
+  const handleSearch = (evt) => {
+    evt.preventDefault();
+    navigate('/pets?pickupLocation=' + pickupLocation + '&pickupDate=' + pickupDate + '&returnDate=' + returnDate);
+
+    
+  }
+
   return (
     <div className='h-screen flex flex-col items-center justify-center gap-14 text-center'> 
       <h1 className='text-4xl text-white md:text-5xl font-semibold'>Your Moment of Calm, Powered by Pets</h1>
-      <form className='flex flex-col md:flex-row items-start md:items-center justify-between p-6 rounded-lg md:rounded-full w-full max-w-80 md:max-w-200 bg-white shadow-[0px_8px_20px_rgba(0,0,0,0.1)]'>
+      <form onSubmit={handleSearch} className='flex flex-col md:flex-row items-start md:items-center justify-between p-6 rounded-lg md:rounded-full w-full max-w-80 md:max-w-200 bg-white shadow-[0px_8px_20px_rgba(0,0,0,0.1)]'>
 
         <div className="flex flex-col md:flex-row items-start md:items-center gap-10 md:ml-8">
 
@@ -35,6 +46,8 @@ const Hero = () => {
           <div className="flex flex-col items-start gap-2">
             <label htmlFor="pickup-date">Session Start Time</label>
             <input
+            value ={pickupDate}
+            onChange={(e) => setPickupDate(e.target.value)}
               type="date"
               name=""
               id="pickup-date"
@@ -49,6 +62,8 @@ const Hero = () => {
           <div className="flex flex-col items-start gap-2">
             <label htmlFor="return-date">Session End Time</label>
             <input
+            value ={returnDate}
+            onChange={(e) => setReturnDate(e.target.value)}
               type="date"
               name=""
               id="return-date"

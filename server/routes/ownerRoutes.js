@@ -9,7 +9,7 @@ const ownerRouter = express.Router();
 ownerRouter.post('/change-role', protect, changeRoleToOwner);
 ownerRouter.post('/list-pet',protect, upload.single('image'), listPet);
 ownerRouter.get('/pets', protect, getOwnerPets);
-ownerRouter.get('/toggle-pet', protect, toggleAvailability);
+ownerRouter.post('/toggle-pet', protect, toggleAvailability);
 ownerRouter.post('/delete-pet', protect, deletePet);
 
 

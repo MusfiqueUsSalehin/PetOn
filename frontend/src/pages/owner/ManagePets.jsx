@@ -1,23 +1,88 @@
 import React ,{useEffect, useState} from 'react'
 import { assets, dummyPetData } from '../../assets/assets'
 import Title from '../../components/owner/Title'
+import { useAppContext } from '../../context/AppContext'
+import toast from 'react-hot-toast'
 
 const ManagePets = () => {
 
-  const currency = import.meta.env.VITE_CURRENCY
+  const {axios,currency,isOwner} = useAppContext();
+
+
 
   const [pets, setPets] = useState([])
 
   const fetchOwnerPets = async ()=>{
-    setPets(dummyPetData)
+    try {
+      const {data} = await axios.get('/api/owner/pets');
+      if(data.success){
+        setPets(data.pets);
+      }
+      else{
+        toast.error(data.message);
+      }
 
+  }
+      catch (error) {
+        console.error(error.message);
+        toast.error(error.message);
+
+    }
   }
 
 
-  useEffect(()=>{
-    fetchOwnerPets()
+  const toggleAvailability = async (petId) => {
+    try {
+      const {data} = await axios.post('/api/owner/toggle-pet', {petId});
+      if(data.success){
+        toast.success(data.message);
+        fetchOwnerPets();
+      }
+      else{
+        toast.error(data.message);
+      }
 
-  },[])
+  }
+      catch (error) {
+        console.error(error.message);
+        toast.error(error.message);
+
+    }
+  }
+
+
+  const deletePet = async (petId) => {
+
+    const confirm = window.confirm("Are you sure you want to delete this pet?");
+    if(!confirm) return null;
+    try {
+      const {data} = await axios.post('/api/owner/delete-pet', {petId});
+      if(data.success){
+        toast.success(data.message);
+        fetchOwnerPets();
+      }
+      else{
+        toast.error(data.message);
+      }
+
+  }
+      catch (error) {
+        console.error(error.message);
+        toast.error(error.message);
+
+    }
+  }
+
+
+
+
+
+
+
+  useEffect(()=>{
+    isOwner && fetchOwnerPets()
+
+  },[isOwner])
 
 
 
@@ -74,7 +139,7 @@ const ManagePets = () => {
                   </span>
                 </td>
                 <td className="p-1 flex items-center bg-[#FFD369] rounded-[100px] m-2">
-                  <img
+                  <img  onClick={()=>toggleAvailability(pet._id)}
                     
                     src={
                       pet.isAvailable ? assets.eye_close_icon : assets.eye_icon
@@ -82,7 +147,7 @@ const ManagePets = () => {
                     alt="eye-icon"
                     className="cursor-pointer"
                   />
-                  <img
+                  <img  onClick={()=>deletePet(pet._id)}
                     
                     src={assets.delete_icon}
                     alt="delete-icon"

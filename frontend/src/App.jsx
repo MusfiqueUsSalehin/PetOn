@@ -18,18 +18,19 @@ import ManagePets from './pages/owner/ManagePets';
 import Login from './components/Login';
 
 import {Toaster} from 'react-hot-toast';
+import { useAppContext } from './context/AppContext';
 
 
 export const App = () => {
-  const [showLogin, setShowLogin] = useState(false);
+  const {showLogin} = useAppContext();
   const isOwnerPath = useLocation().pathname.startsWith('/owner');
 
 
   return (
     <>
       <Toaster position='top-center' />
-      {showLogin && <Login setShowLogin={setShowLogin}/>}
-      {!isOwnerPath && <Navbar setShowLogin={setShowLogin}/>}
+      {showLogin && <Login />}
+      {!isOwnerPath && <Navbar />}
 
       <Routes>
         <Route path='/' element={<Home />} />

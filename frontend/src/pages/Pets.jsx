@@ -1,12 +1,74 @@
-import React from 'react'
+import React, { use, useEffect } from 'react'
 import Title from '../components/Title'
-import { assets, dummyPetData } from '../assets/assets'
+import { assets} from '../assets/assets'
 import { useState } from 'react'
 import PetCard from '../components/PetCard'
+import { useSearchParams } from 'react-router-dom'
+import { useAppContext } from '../context/appContext'
+import toast from 'react-hot-toast'
 
 
 const Pets = () => {
+  //getting search params from url
+  const [searchParams] = useSearchParams();
+
+  const pickupLocation = searchParams.get('pickupLocation');
+  const pickupDate = searchParams.get('pickupDate');
+  const returnDate = searchParams.get('returnDate');
+
+
+  const {pets,axios} = useAppContext();
+
+
   const [input, setInput] = useState('');
+
+  const isSearchData = pickupLocation && pickupDate && returnDate;
+  const [filteredPets, setFilteredPets] = useState([]);
+
+  const applySearchFilter = async () => {
+    if(input === ''){
+      setFilteredPets(pets);
+      return null;
+    }
+
+    const filtered = pets.slice().filter((pet) => {
+      return pet.species.toLowerCase().includes(input.toLowerCase())
+      || pet.breed.toLowerCase().includes(input.toLowerCase())
+      || pet.category.toLowerCase().includes(input.toLowerCase())
+    });
+    setFilteredPets(filtered);
+
+  }
+
+  useEffect(() => {
+    pets.length > 0 && !isSearchData && applySearchFilter();
+  }, [input, pets]);
+
+
+
+  const searchPetAvailabilty = async () => {
+    const {data} = await axios.get('/api/bookings/check-availability',{locations: pickupLocation, pickupDate, returnDate});
+    if (data.success) {
+      setFilteredPets(data.availablePets);
+      if(data.availablePets.length === 0){
+        toast('No pets available');
+      }
+      return null;
+    }
+
+  }
+
+  useEffect(() => {
+    isSearchData && searchPetAvailabilty();
+  }, []); 
+
+
+
+
+
+
+
+
   return (
     <div className="">
       <div
@@ -43,11 +105,11 @@ const Pets = () => {
       <div
         className="px-6 md:px-16 lg:px-24 xl:px-32 mt-10">
         <h3 className="text-gray-300 xl:px-20 max-w-7xl mx-auto">
-          Showing {dummyPetData.length} Pets.
+          Showing {filteredPets.length} Pets.
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-4 xl:px-20 max-w-7xl mx-auto">
-          {dummyPetData.map((p, idx) => (
+          {filteredPets.map((p, idx) => (
             <div key={idx}>
               <PetCard pet={p} />
             </div>

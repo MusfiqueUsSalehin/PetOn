@@ -31,7 +31,7 @@ export const AppProvider = ({ children }) => {
     //check if user is logged in
     async function fetchUser() {
     try {
-      const { data } = await axios.get("/api/user/data");
+      const { data } = await axios.get("/api/users/data");
       if (data.success) {
         setUser(data.user);
         setIsOwner(data.user.role === "owner");
@@ -50,7 +50,7 @@ export const AppProvider = ({ children }) => {
   // f(x) to fetch all pets from the server
   async function fetchPets() {
     try {
-      const { data } = await axios.get("/api/user/pets");
+      const { data } = await axios.get("/api/users/pets");
       data.success ? setPets(data.pets) : toast.error(data.message);
     } catch (err) {
       console.log(err.message);
@@ -78,20 +78,24 @@ export const AppProvider = ({ children }) => {
     const token = localStorage.getItem("token");
     setToken(token);
     fetchPets();
+    
   }, []);
 
 
   // effect to fetch user-data when token is available
   useEffect(() => {
     if (token) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      axios.defaults.headers.common["Authorization"] = `${token}`;
       fetchUser();
+      
     }
   }, [token]);
 
 
 
-    const value = {navigate, 
+    const value = {
+      axios,
+      navigate, 
       currency,
       user, setUser,
       isOwner, setIsOwner,

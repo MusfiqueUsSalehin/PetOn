@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { dummyDashboardData, assets } from '../../assets/assets'
+import { assets } from '../../assets/assets'
 import Title from '../../components/owner/Title'
+import { useAppContext } from '../../context/AppContext'
+import toast from 'react-hot-toast'
 
 
 const Dashboard = () => {
 
-  const currency = import.meta.env.VITE_CURRENCY
+  const {axios, isOwner, currency} = useAppContext();
+
+  
 
   const [data, setData] = useState({
     totalPets: 0,
@@ -40,15 +44,31 @@ const Dashboard = () => {
     },
   ];
 
-  
+  const fetchDashboardData = async ()=>{
+    try {
+      const {data} = await axios.get('/api/owner/dashboard');
+      if (data.success){
+        setData(data.dashboardData);
+      }
+      else{
+        toast.error(data.message);
+      }
+    } 
+    catch (error) {
+      toast.error(error.message);
+    }
+  }
 
 
   useEffect(()=>{
-    setData(dummyDashboardData)
+    if(isOwner){
+      fetchDashboardData();
+    }
 
-  },[])
+  },[isOwner])
 
 
+  
 
   return (
     <div className="px-4 pt-10 md:px-10 flex-1">
@@ -77,7 +97,7 @@ const Dashboard = () => {
         <div className="p-4 md:p-6 border border-white rounded-md max-w-lg w-full bg-[#FFD369]">
           <h1 className="text-lg font-medium">Recent Bookings</h1>
           <p className="text-gray-500">Latest customer bookings</p>
-          {data.recentBookings.map((booking, idx) => (
+          { (data.recentBookings || []).map((booking, idx) => (
             <div key={idx} className="mt-4 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="hidden md:flex items-center justify-center w-12 h-12 rounded-full bg-primary/10">
@@ -89,7 +109,7 @@ const Dashboard = () => {
                 </div>
                 <div className="">
                   <p className="">
-                    {booking.pet.name} | {booking.pet.species}
+                    {booking.pet ?.name} | {booking.pet ?.species}
                   </p>
                   <p className="text-sm text-gray-500">
                     {booking.createdAt.split("T")[0]}

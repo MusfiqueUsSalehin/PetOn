@@ -1,30 +1,78 @@
 import React, {useState} from 'react'
 import Title from '../../components/owner/Title'
 import { assets } from '../../assets/assets'
+import { useAppContext } from '../../context/AppContext'
+import toast from 'react-hot-toast'
 
 
 const AddPet = () => {
 
-  const currency = import.meta.env.VITE_CURRENCY
+  const {axios,currency}= useAppContext()
+
+  
 
   const [image, setImage] = useState(null)
   const [pet, setPet] = useState({
             "name": "",
-            "species": "Enter",
-            "breed": "Enter",
+            "species": '',
+            "breed": '',
             "age": 0,
-            "behaviour": "Select",
+            "behaviour": '',
             "pricePerDay": 0,
-            "location": "Select a location",
-            "description": "Write here",
-            "trained": "",
-            "active": "Select",
+            "location": '',
+            "description": '',
+            "trained": '',
+            "active": '',
+            "diet": '',
+            "category": ''
             
   })
 
+
+  const [isLoading, setIsLoading] = useState(false)
+
   const handleSubmit = async (e)=>{
     e.preventDefault()
+    if(isLoading) return null;
+    setIsLoading(true);
+
+    try {
+      const formData = new FormData();
+      formData.append('image', image);
+      formData.append('petData', JSON.stringify(pet));
+
+      const {data} = await axios.post('/api/owner/list-pet', formData)
+      if(data?.success){
+        toast.success(data.message)
+        setImage(null)
+        setPet({
+            "name": "",
+            "species": '',
+            "breed": '',
+            "age": 0,
+            "behaviour": '',
+            "pricePerDay": 0,
+            "location": '',
+            "description": '',
+            "trained": '',
+            "active": '',
+            "diet": '',
+            "category": '',
+        })
+      }
+      else{
+        toast.error(data.message)
+      }
+    } 
+    catch (error) {
+      console.log(error);
+      toast.error(error.message)
+    }finally{
+      setIsLoading(false);
+    }
+
   }
+      
 
  
   return (
@@ -41,7 +89,7 @@ const AddPet = () => {
           <label htmlFor="pet-image">
             <img
               src={image ? URL.createObjectURL(image) : assets.upload}
-              alt="car-image"
+              alt="pet-image"
               className="h-14 rounded cursor-pointer"
             />
             <input
@@ -117,7 +165,7 @@ const AddPet = () => {
             />
           </div>
         </div>
-        {/* Car Behaviour, Energy, training */}
+        {/* Car Behaviour, Energy, training , diet, category*/}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="flex flex-col w-full">
             <label className='text-white'>Behaviour</label>
@@ -128,10 +176,10 @@ const AddPet = () => {
                 (evt) => setPet({ ...pet, behaviour: evt.target.value }) // update transmission
               }>
               <option value="">Select a behaviour</option>
-              <option value="Automatic">Friendly</option>
-              <option value="Manual">Calm</option>
-              <option value="Semi-Automatic">Protective</option>
-              <option value="Semi-Automatic">Gentle</option>
+              <option value="Friendly">Friendly</option>
+              <option value="Calm">Calm</option>
+              <option value="Protective">Protective</option>
+              <option value="Gentle">Gentle</option>
             </select>
           </div>
           <div className="flex flex-col w-full">
@@ -143,11 +191,10 @@ const AddPet = () => {
                 (evt) => setPet({ ...pet, active: evt.target.value }) // update Energy
               }>
               <option value="">Select</option>
-              <option value="Gas">Highly active</option>
-              <option value="Diesel">Active</option>
-              <option value="Petrol">Lazy</option>
-              <option value="Electric">Very lazy</option>
-              
+              <option value="Highly active">Highly active</option>
+              <option value="Active">Active</option>
+              <option value="Lazy">Lazy</option>
+              <option value="Very lazy">Very lazy</option>
             </select>
           </div>
           <div className="flex flex-col w-full">
@@ -162,6 +209,36 @@ const AddPet = () => {
               } // update seating_capacity
               required
             />
+          </div>
+          <div className="flex flex-col w-full">
+            <label className='text-white'>Diet</label>
+            <select
+              className="px-3 py-2 mt-1 border border-[#FFD369] rounded-md outline-none"
+              value={pet.diet}
+              onChange={
+                (evt) => setPet({ ...pet, diet: evt.target.value }) // update diet
+              }>
+              <option value="">Select a diet</option>
+              <option value="Carnivore">Carnivore</option>
+              <option value="Herbivore">Herbivore</option>
+              <option value="Omnivore">Omnivore</option>
+              <option value="Gentle">Gentle</option>
+            </select>
+          </div>
+          <div className="flex flex-col w-full">
+            <label className='text-white'>Category</label>
+            <select
+              className="px-3 py-2 mt-1 border border-[#FFD369] rounded-md outline-none"
+              value={pet.category}
+              onChange={
+                (evt) => setPet({ ...pet, category: evt.target.value }) // update category
+              }>
+              <option value="">Select a category</option>
+              <option value="very small">very small</option>
+              <option value="small">small</option>
+              <option value="large">large</option>
+              <option value="very large">very large</option>
+            </select>
           </div>
         </div>
         {/* Pet Location */}
@@ -195,7 +272,7 @@ const AddPet = () => {
         </div>
         <button className="flex items-center gap-2 px-4 py-2.5 mt-4 hover:bg-primary-dull bg-[#39FF14] text-black rounded-md font-medium w-max cursor-pointer">
           <img src={assets.tick_icon} alt="tick-icon" />
-          List your pet
+          {isLoading ? "Listing..." : "List your pet"}
         </button>
       </form>
     </div>

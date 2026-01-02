@@ -4,36 +4,26 @@ import { assets } from '../assets/assets'
 const Footer = () => {
   return (
     <div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
+      
       className="px-6 md:px-16 lg:px-24 xl:px-32 mt-60 text-60 text-sm text-gray-500">
       <div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
+        
         className="flex flex-wrap justify-between items-start gap-8 pb-6 border-borderColor border-b">
         <div className="">
           <img
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            
             src={assets.logo}
             alt="logo"
             className="h-8 md:h-9"
           />
           <p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
+            
             className="max-w-80 mt-3">
             Premium car rental service with a wide selection of luxury and
             everyday vehicles for all your driving needs.
           </p>
           <div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
+            
             className="flex items-center gap-3 mt-6">
             <a href="https://www.instagram.com/iamskyy666/" target="_blank">
               <img
@@ -66,9 +56,7 @@ const Footer = () => {
           </div>
         </div>
         <div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
+          
           className="flex flex-wrap justify-between w-1/2 gap-8">
           <div>
             <h2 className="text-base font-medium text-[#FFD369] uppercase">
@@ -131,9 +119,7 @@ const Footer = () => {
       </div>
 
       <div
-        initial={{ opacity: 0, y:10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.6 }}
+        
         className="flex flex-col md:flex-row gap-2 items-center justify-between py-5">
         <p>
           © {new Date().getFullYear()}{" "}
