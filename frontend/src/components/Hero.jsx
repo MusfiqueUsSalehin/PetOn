@@ -1,7 +1,7 @@
 import React from 'react'
 import { assets , cityList } from '../assets/assets'
 import { useState } from 'react'
-import { useAppContext } from '../context/appContext';
+import { useAppContext } from '../context/AppContext';
 
 const Hero = () => {
 
