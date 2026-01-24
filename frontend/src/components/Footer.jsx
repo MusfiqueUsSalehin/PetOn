@@ -19,8 +19,7 @@ const Footer = () => {
           <p
             
             className="max-w-80 mt-3">
-            Premium car rental service with a wide selection of luxury and
-            everyday vehicles for all your driving needs.
+            Peaceful pet session booking with a wide and verified selection of pets.
           </p>
           <div
             
