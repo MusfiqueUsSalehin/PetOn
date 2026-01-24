@@ -71,7 +71,7 @@ export const listPet = async (req, res) => {
 };
 
 
-//API to list all pets of an owner
+//API to access list all pets of an owner
 export async function getOwnerPets(req, res) {
   try {
     const { _id } = req.user;

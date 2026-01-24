@@ -1,37 +1,33 @@
 import React from 'react'
 import { useState } from 'react'
+import axios from 'axios';
 
-import emailjs from '@emailjs/browser';
+import toast from 'react-hot-toast';
+
+
 
 
 const NewsLetter = () => {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState(null) 
 
-  const sendEmail = (e) => {
+  const sendEmail = async (e) => {
     e.preventDefault()
     setStatus('sending')
 
-    
-    const serviceID = 'service_hyp8y2i'
-    const templateID = 'template_yexklad'
-    const publicKey = 'uMYu5odLbjWfz3iOm'
-
-    // The object keys must match variables in your EmailJS template
-    const templateParams = {
-      user_email: email, 
+    try {
       
-    }
+      const {data} = await axios.post('/api/newsletter/subscribe', {userEmail: email});
 
-    emailjs.send(serviceID, templateID, templateParams, publicKey).then((response) => {
-        console.log('SUCCESS!', response.status, response.text)
-        setStatus('success')
-        setEmail('') // Clear input
-      })
-      .catch((err) => {
-        console.error('FAILED...', err)
-        setStatus('error')
-      })
+      
+      console.log('Server Response:', data.message);
+      setStatus('success')
+      setEmail('') // Clear input
+
+    } catch (err) {
+      toast.error(err.message)
+      setStatus('error')
+    }
   }
   return (
      <div
