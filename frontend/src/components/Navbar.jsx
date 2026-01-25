@@ -45,7 +45,7 @@ export const Navbar = () => {
       </Link>
 
 
-      <div className={`max-sm:fixed max-sm:h-screen max-sm:w-full max-sm:top-16 max-sm:border-t border-borderColor right-0 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 max-sm:p-4 transition-all duration-300 z-50 ${location.pathname === '/' ? 'bg-[#222831]/90 backdrop-blur-md' : 'bg-transparent'} ${Open ? 'max-sm:translate-x-0' : 'max-sm:translate-x-full'}`}>
+      <div className={`max-sm:fixed max-sm:h-screen max-sm:w-full max-sm:top-16 max-sm:border-t border-borderColor right-0 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 max-sm:p-4 transition-all duration-300 z-50 bg-[#222831]/90 backdrop-blur-md ${Open ? 'max-sm:translate-x-0' : 'max-sm:translate-x-full'}`}>
         {menuLinks.map((link, id) => (
           <Link key={id} to={link.path} onClick={() => setOpen(false)} className='text-[#FFD369]'>
             {link.name}
