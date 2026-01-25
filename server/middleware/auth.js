@@ -7,7 +7,7 @@ export const protect = async (req, res, next) => {
 
     const token = req.headers.authorization;
     if (!token) {
-        return res.json({ success: false, message: "no token provided" });
+        return res.json({ success: false, message: "please login first" });
 
     }
     try {

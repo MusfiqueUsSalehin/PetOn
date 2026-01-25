@@ -36,6 +36,8 @@ import tick_icon from './tick_icon.svg'
 import eye_close_icon from './eye_close_icon.svg'
 import eye_icon from './eye_icon.svg'
 import delete_icon from './delete_icon.svg'
+import menu_icon from './menu_icon.svg'
+import close_icon from './close_icon.svg'
 
 
 
@@ -79,7 +81,9 @@ export const assets = {
   tick_icon,
   eye_close_icon,
   eye_icon,
-  delete_icon
+  delete_icon,
+  menu_icon,
+  close_icon
 }
 
 

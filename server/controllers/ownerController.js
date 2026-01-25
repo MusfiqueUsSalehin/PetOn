@@ -15,7 +15,7 @@ export const changeRoleToOwner = async (req, res) => {
         res.json({ success:true, message: 'Role updated to owner successfully.' });
     } catch (error) {
         console.error(error.message);
-        res.json({ success:false, message: 'Server Error' });
+        res.json({ success:false, message: ' Please Login first' });
     }
 };
 

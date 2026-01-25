@@ -9,7 +9,7 @@ import { useAppContext } from '../context/AppContext'
 
 export const Navbar = () => {
 
-  const {setShowLogin, user, logoutUser, isOwner, setIsOwner, axios, setUser} = useAppContext();
+  const {setShowLogin, user, logoutUser, isOwner, setIsOwner, axios} = useAppContext();
 
 
   const location = useLocation();
@@ -47,7 +47,7 @@ export const Navbar = () => {
 
       <div className={`max-sm:fixed max-sm:h-screen max-sm:w-full max-sm:top-16 max-sm:border-t border-borderColor right-0 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 max-sm:p-4 transition-all duration-300 z-50 ${location.pathname === '/' ? 'bg-[#222831]/90 backdrop-blur-md' : 'bg-transparent'} ${Open ? 'max-sm:translate-x-0' : 'max-sm:translate-x-full'}`}>
         {menuLinks.map((link, id) => (
-          <Link key={id} to={link.path} className='text-[#FFD369]'>
+          <Link key={id} to={link.path} onClick={() => setOpen(false)} className='text-[#FFD369]'>
             {link.name}
           </Link>
         ))}
@@ -61,11 +61,18 @@ export const Navbar = () => {
 
 
         <div className='flex max-sm:flex-col items-start sm:items-center gap-6 '>
-          <button onClick={()=>isOwner ? navigate('/owner') : changeRole()} className='cursor-pointer'>{isOwner ? 'Dashboard' : 'List Pets'} </button>
-          <button onClick={()=>{user ? logoutUser() : setShowLogin(true)}} className='px-8 py-2 rounded-lg text-sm text-black bg-[#31E1F7] hover:opacity-70 transition-all cursor-pointer'>{user ? 'Logout' : 'Login'}</button>
+          <button onClick={()=>{isOwner ? navigate('/owner') : changeRole(); setOpen(false)}} className='cursor-pointer'>{isOwner ? 'Dashboard' : 'List Pets'} </button>
+          <button onClick={()=>{user ? logoutUser() : setShowLogin(true); setOpen(false)}} className='px-8 py-2 rounded-lg text-sm text-black bg-[#31E1F7] hover:opacity-70 transition-all cursor-pointer'>{user ? 'Logout' : 'Login'}</button>
         </div>
             
       </div>
+
+      <button
+        className="sm:hidden cursor-pointer"
+        aria-label={Open ? "Close Menu" : "Open Menu"}
+        onClick={() => setOpen(!Open)}>
+        <img src={Open ? assets.close_icon : assets.menu_icon} alt="menu" />
+      </button>
         
     </div>
   )
